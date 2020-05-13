@@ -1,21 +1,29 @@
 import React, { Component, Fragment } from 'react'
 
 class Profile extends Component {
-    handleModalOpen() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalActive: false
+        }
+    }
+    componentDidMount() {
+    }
+    
+    handleModalOpen = () => {
         console.log('handleShowModal Ran');
-        const overlay = document.querySelector('.overlay');
-        const modal = document.querySelector('.modal');
-
-        overlay.classList.add('show');
+        // Set modalActive to true
+        this.setState({
+            modalActive: true
+        }, () => console.log(this.state.modalActive) );
     }
 
-    handleModalClose() {
+    handleModalClose = () => {
         console.log('handleModalClose Ran');
 
-        const overlay = document.querySelector('.overlay');
-        const modal = document.querySelector('.modal');
-
-        overlay.classList.remove('show');
+        this.setState({
+            modalActive: false
+        }, () => console.log(this.state.modalActive) );
     }
 
     render() {
@@ -42,7 +50,7 @@ class Profile extends Component {
 
                     </div>
                 </div>
-                <div className="overlay">
+                <div className={`overlay ${this.state.modalActive ? 'show': ''}`}>
                     <div className="modal-close">
                         <a href="#" onClick={this.handleModalClose}>Close</a>
                     </div>
