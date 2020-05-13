@@ -107,11 +107,12 @@ footer {
 }
 
 .discogs__footer--info-window {
-    display: none;
+    opacity: 0;
 }
 
 .discogs__footer--info-window.show {
-    display: flex;
+    opacity: 1;
+    transition: .12s ease-in-out;
 }
 
 .active {
