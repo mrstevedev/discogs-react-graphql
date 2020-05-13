@@ -47,7 +47,7 @@ footer {
         a {
             text-decoration: none;
             color: #646464;
-            transition: .12s ease-in-out;
+            transition: .22s ease-in-out;
 
             &:hover {
                 color: #B9B9B9;
@@ -148,8 +148,10 @@ footer {
             text-decoration: none;
             text-transform: uppercase;
             position: absolute;
-            right: 1.5rem;
-            bottom: 2rem;
+            right: 1.1rem;
+            bottom: 1.3rem;
+            background: #e4e4e4;
+            padding: 0.6rem 2rem;
         }
     }
 }
@@ -180,6 +182,9 @@ footer {
 }
 
 @media(max-width: 435px) {
+    nav {
+        background: #ffffff;
+    }
     .main-nav-list {
         padding: 0;
     }
@@ -194,4 +199,12 @@ footer {
             }
         }
     }
+    .active:after {
+        content: '';
+        border-bottom: solid 2px #000000;
+        display: block;
+        position: relative;
+        bottom: -16px;
+    }
+    
 }
