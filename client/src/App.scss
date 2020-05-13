@@ -110,6 +110,10 @@ footer {
     display: none;
 }
 
+.discogs__footer--info-window.show {
+    display: flex;
+}
+
 .active {
     color:#b9b9b9 !important;
 }
@@ -150,6 +154,7 @@ footer {
             bottom: 1.3rem;
             background: #e4e4e4;
             padding: 0.6rem 2rem;
+            border-radius: 4px;
         }
     }
 }
