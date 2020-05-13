@@ -1,32 +1,22 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment, useState } from 'react';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
 
-class Profile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            modalActive: false
-        }
-    }
-    componentDidMount() {
-    }
-    
-    handleModalOpen = () => {
+        
+function Profile() {
+    const [ modalActive, setModalActive ] = useState(false);
+
+    function handleModalOpen() {
         console.log('handleShowModal Ran');
         // Set modalActive to true
-        this.setState({
-            modalActive: true
-        }, () => console.log(this.state.modalActive) );
+       setModalActive(true);
     }
 
-    handleModalClose = () => {
+    function handleModalClose() {
         console.log('handleModalClose Ran');
 
-        this.setState({
-            modalActive: false
-        }, () => console.log(this.state.modalActive) );
+       setModalActive(false);
     }
-
-    render() {
         return (
             <Fragment>
                 <div className="discogs__profile--container" 
@@ -34,7 +24,7 @@ class Profile extends Component {
                     data-aos-delay="900"
                     data-aos-duration="10"
                     data-aos-easing="ease-in-out">
-                    <a href="#" onClick={this.handleModalOpen}>
+                    <a href="#" onClick={handleModalOpen}>
                         <div className="discogs__profile--img"></div>
                     </a>
                     <div className="discogs__profile--username">
@@ -50,21 +40,20 @@ class Profile extends Component {
 
                     </div>
                 </div>
-                <div className={`overlay ${this.state.modalActive ? 'show': ''}`}>
+                <div className={`overlay ${modalActive ? 'show': ''}`}>
                     <div className="modal-close">
-                        <a href="#" onClick={this.handleModalClose}>Close</a>
+                        <a href="#" onClick={handleModalClose}>Close</a>
                     </div>
                     <div className="modal">
                         <img src="../../public/img/joehenderson.jpg" />
 
                         <div>
-                            <a href="#" onClick={this.handleModalClose}>Close</a>
+                            <a href="#" onClick={handleModalClose}>Close</a>
                         </div>
                     </div>
                 </div>
             </Fragment>
         )
-    }
 }
 
 export default Profile;
