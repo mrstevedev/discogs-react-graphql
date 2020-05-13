@@ -7,14 +7,10 @@ function Profile() {
     const [ modalActive, setModalActive ] = useState(false);
 
     function handleModalOpen() {
-        console.log('handleShowModal Ran');
-        // Set modalActive to true
        setModalActive(true);
     }
 
     function handleModalClose() {
-        console.log('handleModalClose Ran');
-
        setModalActive(false);
     }
         return (
