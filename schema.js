@@ -1,4 +1,5 @@
 const axios = require('axios');
+const env = require('dotenv').config({path: __dirname + '/.env'});
 
 // GraphQL Types 
 const {
@@ -27,7 +28,7 @@ const RootQuery = new GraphQLObjectType({
         profile: {
             type: ProfileType,
             resolve(parent, args) {
-                return axios.get(`https://api.discogs.com/users/eckosneekz?token=grtfJJDMKpBgJSutArDAMFaFLafCBEblnwnOmHtb`)
+                return axios.get(`https://api.discogs.com/users/eckosneekz?token=${ process.env.DISCOGS_API_TOKEN }`)
                     .then(res => res.data)
             }
         }
