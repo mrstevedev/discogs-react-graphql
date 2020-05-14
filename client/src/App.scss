@@ -40,6 +40,7 @@ footer {
 .main-nav-list {
     display: inline-flex;
     list-style: none;
+    padding: 0;
     
     li {
         padding: 0 1.5rem;
@@ -180,7 +181,7 @@ footer {
     }
 }
 
-@media(max-width: 435px) {
+@media(max-width: 535px) {
     nav {
         background: #ffffff;
     }
@@ -191,8 +192,7 @@ footer {
         .modal {
             width: 80%;
             padding: 1rem;
-            height: 400px;
-
+            
             img {
                 width: 100%;
             }
@@ -206,4 +206,18 @@ footer {
         bottom: -16px;
     }
     
+}
+
+.discogs__about--text {
+    font-size: 3.3rem;
+    padding: 4rem 3rem;
+
+    &:after {
+        content: '';
+        display: block;
+        height: 7px;
+        width: 15rem;
+        background: #fff;
+        margin: 3rem 0;
+    }
 }
