@@ -7,7 +7,7 @@ const MyGraphQLSchema = require('./schema');
 const app = express();
 
 // Alloe Cross-Origin
-// app.use(cors());
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Welcome to the API');
