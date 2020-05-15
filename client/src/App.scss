@@ -96,9 +96,10 @@ footer {
 }
 
 .discogs__footer--info {
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem 1.5rem;
+    position: fixed;
+    right: 1rem;
+    text-align: right;
+    bottom: 1.4rem;
 
     a {
         color: #fff;
@@ -109,6 +110,8 @@ footer {
 
 .discogs__footer--info-window {
     opacity: 0;
+    position: absolute;
+    right: 3rem;
 }
 
 .discogs__footer--info-window.show {
@@ -205,11 +208,17 @@ footer {
         position: relative;
         bottom: -16px;
     }
-    
+    .discogs__collection--responseContainer {
+        div {
+            img {
+                width: 100%;
+            }
+        }
+    }
 }
 
 .discogs__about--text {
-    font-size: 3.3rem;
+    font-size: 3.2rem;
     padding: 4rem 3rem;
 
     &:after {
@@ -219,5 +228,38 @@ footer {
         width: 15rem;
         background: #fff;
         margin: 3rem 0;
+    }
+}
+
+.discogs__collection--responseContainer {
+    .discogs__collection--img {
+        position: relative;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .discogs__collection--overlay {
+        position: absolute;
+        bottom: 0;
+        height: 75px;
+        background: rgba(0, 0, 0, 0.9);
+        width: 100%;
+
+        p {
+            margin: 0;
+        }
+        p:last-child {
+            font-size: 0.9rem;
+            color: #6d6d6d;
+            font-family: 'helvetica neue';
+            font-weight: bold;
+            margin: 3px 0;
+        }
+
+        .discogs__collection--overlay-inner  {
+            margin: 1rem 2rem;
+        }
     }
 }
