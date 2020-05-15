@@ -145,7 +145,7 @@ footer {
     .modal {
         background: #fff;
         width: 493px;
-        height: 555px;
+        height: 465px;
         text-align: center;
         padding: 2rem;
         position: relative;
@@ -160,6 +160,12 @@ footer {
             background: #e4e4e4;
             padding: 0.6rem 2rem;
             border-radius: 4px;
+            transition: .22s ease-in-out;
+
+            &:hover {
+                background: #2d2d2d;
+                color: #fff;
+            }
         }
     }
 }
@@ -262,4 +268,19 @@ footer {
             margin: 1rem 2rem;
         }
     }
+}
+
+// Wantlist Styles 
+.wantlist-search {
+    height: 38px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-weight: bold;
+    font-size: 2rem;
+    text-indent: 1rem;
+    border-bottom: solid 5px #b9b9b9;
+    margin: 2rem 3rem;
+    width: 400px;
 }
