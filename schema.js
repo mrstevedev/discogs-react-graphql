@@ -60,7 +60,7 @@ const ReleasesType = new GraphQLObjectType({
     })
 });
 
-// BasicInformationType
+// BasicInformation Type
 const BasicInformationType = new GraphQLObjectType({
     name: 'BasicInformation',
     fields: () => ({
@@ -72,7 +72,7 @@ const BasicInformationType = new GraphQLObjectType({
     })
 })
 
-// ArtistsType
+// Artists Type
 const ArtistsType = new GraphQLObjectType({
     name: 'Artists',
     fields: () => ({
@@ -81,6 +81,42 @@ const ArtistsType = new GraphQLObjectType({
 })
 
 // Wantlist Type
+const WantlistType = new GraphQLObjectType({
+    name: 'Wantlist',
+    fields: () => ({
+        wants: { type: new GraphQLList(WantsType) }
+    })
+})
+
+// Wants Type
+const WantsType = new GraphQLObjectType({
+    name: 'WantsType',
+    fields: () => ({
+        rating: { type: GraphQLInt },
+        basic_information: { type: BasicInformationWantlistType }
+    })
+});
+
+// BasicInformation Type
+const BasicInformationWantlistType = new GraphQLObjectType({
+    name: 'BasicInformationWantlistType',
+    fields: () => ({
+        id: { type: GraphQLInt },
+        title: { type: GraphQLString },
+        year: { type: GraphQLInt },
+        thumb: { type: GraphQLString },
+        cover_image: { type: GraphQLString },
+        master_id: { type: GraphQLInt }
+    })
+});
+
+// MasterType
+const MasterType = new GraphQLObjectType({
+    name: 'Master',
+    fields: () => ({
+        num_for_sale: { type: GraphQLInt }
+    })
+})
 
 // Root Query 
 const RootQuery = new GraphQLObjectType({
@@ -99,7 +135,24 @@ const RootQuery = new GraphQLObjectType({
                 return axios.get(`https://api.discogs.com/users/eckosneekz/collection/folders/0/releases?sort=added&sort_order=desc&per_page=50&token=${ process.env.DISCOGS_API_TOKEN }`)
                     .then(res => res.data)
             }
-        }
+        },
+        wantlist: {
+            type: WantlistType,
+            resolve(parent, args) {
+                return axios.get(`https://api.discogs.com/users/eckosneekz/wants?sort=added&sort_order=desc&per_page=50&token=${ process.env.DISCOGS_API_TOKEN }`)
+                    .then(res => res.data)
+            }
+        },
+        master: {
+           type: MasterType,
+           args: {
+               master_id: { type: GraphQLInt }
+           },
+            resolve(parent, args) {
+                return axios.get(`https://api.discogs.com/masters/${ args.master_id }`)
+                    .then(res => res.data)
+            }
+       }
     }
 });
 
