@@ -221,6 +221,11 @@ footer {
             }
         }
     }
+
+    .discogs__wantlist--container {
+        padding: 0 !important;
+        grid-auto-rows: 500px !important;
+    }
 }
 
 .discogs__about--text {
@@ -270,8 +275,27 @@ footer {
     }
 }
 
+.discogs__wantlist--container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    width: 100%; 
+    display: grid;
+    /* Define Auto Row size */
+    grid-auto-rows: 400px; 
+    /*Define our columns */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    grid-gap: 1em;
+    .discogs__wantlist--img {
+        padding: 20px;
+        img {
+            width: 100%;
+        }
+    }
+}
+
 // Wantlist Styles 
-.wantlist-search {
+.discogs__wantlist--searchInput {
     height: 38px;
     border: none;
     outline: none;
@@ -279,8 +303,12 @@ footer {
     color: #fff;
     font-weight: bold;
     font-size: 2rem;
-    text-indent: 1rem;
-    border-bottom: solid 5px #b9b9b9;
-    margin: 2rem 3rem;
-    width: 400px;
+    text-indent: 0.2rem;
+    border-bottom: solid 1px #b9b9b9;
+    margin: 2rem 2rem;
+    // width: 400px;
+}
+
+::placeholder {
+    font-size: 1rem;
 }
