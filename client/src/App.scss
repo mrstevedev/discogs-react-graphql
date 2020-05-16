@@ -6,6 +6,11 @@
     font-style: normal;
 }
 
+a {
+    color: #73bdde;
+    text-decoration: none;
+}
+
 h1 {
     margin: 0;
 }
@@ -307,6 +312,10 @@ footer {
     border-bottom: solid 1px #b9b9b9;
     margin: 2rem 2rem;
     // width: 400px;
+}
+
+.discogs__wantlist--title {
+    font-size: 1.5rem;
 }
 
 ::placeholder {
