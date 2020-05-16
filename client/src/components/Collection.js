@@ -35,11 +35,7 @@ function Collection()  {
     } = data.collection.releases
     
     return (
-        <div className="discogs__collection--responseContainer"
-        data-aos="fade-in" 
-        data-aos-delay="100"
-        data-aos-duration="10"
-        data-aos-easing="ease-in-out">
+        <div className="discogs__collection--responseContainer">
             { data.collection.releases.map( release => (
                 <div className="discogs__collection--img" key={ release.basic_information.id }>
                     <div className="discogs__collection--overlay">
