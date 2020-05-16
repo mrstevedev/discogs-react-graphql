@@ -93,6 +93,8 @@ const WantsType = new GraphQLObjectType({
     name: 'WantsType',
     fields: () => ({
         rating: { type: GraphQLInt },
+        notes: { type: GraphQLString },
+        date_added: { type: GraphQLString },
         basic_information: { type: BasicInformationWantlistType }
     })
 });
@@ -106,7 +108,39 @@ const BasicInformationWantlistType = new GraphQLObjectType({
         year: { type: GraphQLInt },
         thumb: { type: GraphQLString },
         cover_image: { type: GraphQLString },
-        master_id: { type: GraphQLInt }
+        master_id: { type: GraphQLInt },
+        formats:  { type: new GraphQLList(FormatsType) },
+        labels: { type: new GraphQLList(LabelsType) },
+        artists: { type: new GraphQLList(WantlistArtistType) }
+    })
+});
+
+// WantlistArtistType
+const WantlistArtistType = new GraphQLObjectType({
+    name: 'WantlistArtistType',
+    fields: () => ({
+        name: { type: GraphQLString },
+        anv: { type: GraphQLString }
+    })
+})
+
+// Labels Type 
+const LabelsType = new GraphQLObjectType({
+    name: 'Labels',
+    fields: () => ({
+        name: { type: GraphQLString },
+        catno: { type: GraphQLString }
+    })
+});
+
+// Formats Type
+const FormatsType = new GraphQLObjectType({
+    name: 'Formats',
+    fields: () => ({
+        /**
+         *  formats [ descriptions [ "", "" ] ]
+         */
+        descriptions: { type: new GraphQLList(GraphQLString) }
     })
 });
 
@@ -114,7 +148,8 @@ const BasicInformationWantlistType = new GraphQLObjectType({
 const MasterType = new GraphQLObjectType({
     name: 'Master',
     fields: () => ({
-        num_for_sale: { type: GraphQLInt }
+        num_for_sale: { type: GraphQLInt },
+        lowest_price: { type: GraphQLInt }
     })
 })
 
@@ -132,14 +167,14 @@ const RootQuery = new GraphQLObjectType({
         collection: {
             type: CollectionType,
             resolve(parent, args) {
-                return axios.get(`https://api.discogs.com/users/eckosneekz/collection/folders/0/releases?sort=added&sort_order=desc&per_page=50&token=${ process.env.DISCOGS_API_TOKEN }`)
+                return axios.get(`https://api.discogs.com/users/eckosneekz/collection/folders/0/releases?sort=added&sort_order=desc&per_page=25&token=${ process.env.DISCOGS_API_TOKEN }`)
                     .then(res => res.data)
             }
         },
         wantlist: {
             type: WantlistType,
             resolve(parent, args) {
-                return axios.get(`https://api.discogs.com/users/eckosneekz/wants?sort=added&sort_order=desc&per_page=50&token=${ process.env.DISCOGS_API_TOKEN }`)
+                return axios.get(`https://api.discogs.com/users/eckosneekz/wants?sort=added&sort_order=desc&per_page=25&token=${ process.env.DISCOGS_API_TOKEN }`)
                     .then(res => res.data)
             }
         },
