@@ -14,10 +14,8 @@ import 'aos/dist/aos.css';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-const cache = new InMemoryCache();
-
 const client = new ApolloClient({
-    cache,
+    cache: new InMemoryCache(),
     link: new HttpLink({
         uri: 'http://localhost:5000/graphql'
     })
