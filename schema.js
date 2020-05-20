@@ -113,7 +113,8 @@ const BasicInformationWantlistType = new GraphQLObjectType({
         formats:  { type: new GraphQLList(FormatsType) },
         labels: { type: new GraphQLList(LabelsType) },
         artists: { type: new GraphQLList(WantlistArtistType) },
-        resource_url: { type: GraphQLString }
+        resource_url: { type: GraphQLString },
+        releases: { type: WantlistReleasesType }
     })
 });
 
@@ -145,15 +146,6 @@ const FormatsType = new GraphQLObjectType({
         descriptions: { type: new GraphQLList(GraphQLString) }
     })
 });
-
-// MasterType
-const MasterType = new GraphQLObjectType({
-    name: 'Masters',
-    fields: () => ({
-        num_for_sale: { type: GraphQLInt },
-        lowest_price: { type: GraphQLFloat }
-    })
-})
 
 // WantlistReleasesType
 const WantlistReleasesType = new GraphQLObjectType({
@@ -189,21 +181,11 @@ const RootQuery = new GraphQLObjectType({
                     .then(res => res.data)
             }
         },
-        master: {
-           type: MasterType,
-           args: {
-               master_id: { type: GraphQLInt }
-           },
-            resolve(parent, args) {
-                return axios.get(`https://api.discogs.com/masters/${ args.master_id }`)
-                    .then(res => res.data)
-            }
-       },
         releases: {
            type: WantlistReleasesType,
            args: {
                id: { type: GraphQLInt },
-              
+                
            },
            resolve(parent, args) {
                 return axios.get(`https://api.discogs.com/releases/${ args.id }`)
