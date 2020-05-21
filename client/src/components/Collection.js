@@ -59,7 +59,7 @@ function Collection()  {
 
                 </div>
             </div>
-            <div className="discogs__wantlist-pagination">
+            <div className="discogs__wantlist--pagination">
                 { collectionData.collection.pagination.page } - { collectionData.collection.pagination.per_page } of { collectionData.collection.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
                 <a href="#" onClick={ () => refetch( { page: collectionData.collection.pagination.page -1 } )}>Prev</a> 1, 2, 3 ... { lessOnePage }  { collectionData.collection.pagination.pages }
                 <a href="#" onClick={ () => refetch( { page: collectionData.collection.pagination.page + 1 } ) }>Next</a>
