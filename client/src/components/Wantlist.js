@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
@@ -59,9 +59,8 @@ const RELEASES_QUERY = gql`
 // `;
 
 function Wantlist() {
-    const [ perPage, setPerPage ] = useState(50);
     const { loading, error, data: wantlistData, refetch, variables } = useQuery(WANTLIST_QUERY, {
-      variables: { per_page: perPage }
+      variables: { per_page: 50 }
     });
     // const id = wantlistData && wantlistData.wantlist.wants.map((want) => want.basic_information.id);
     // console.log(id);
@@ -74,7 +73,6 @@ function Wantlist() {
     if (loading) return <h4>Loading..</h4>;
     if (error) console.log(error);
     console.log(wantlistData);
-    console.log(variables);
   return (
     <div>
       <div className="discogs__wantlist--search">
