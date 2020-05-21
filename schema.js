@@ -85,7 +85,9 @@ const ArtistsType = new GraphQLObjectType({
 const WantlistType = new GraphQLObjectType({
     name: 'Wantlist',
     fields: () => ({
-        wants: { type: new GraphQLList(WantsType) }
+        wants: { type: new GraphQLList(WantsType) },
+        pagination: { type: PaginationWantlistType }
+
     })
 })
 
@@ -96,9 +98,30 @@ const WantsType = new GraphQLObjectType({
         rating: { type: GraphQLInt },
         notes: { type: GraphQLString },
         date_added: { type: GraphQLString },
-        basic_information: { type: BasicInformationWantlistType }
+        basic_information: { type: BasicInformationWantlistType },
     })
 });
+
+// Pagination Type
+const PaginationWantlistType = new GraphQLObjectType({
+    name: 'PaginationWantlist',
+    fields: () => ({
+        per_page: { type: GraphQLInt  },
+        items: { type: GraphQLInt },
+        page: { type: GraphQLInt },
+        urls: { type: UrlWantlistType },
+        pages: { type: GraphQLInt }        
+    })
+});
+
+// UrlWantlistType
+const UrlWantlistType = new GraphQLObjectType({
+    name: 'UrlWantlistType',
+    fields: () => ({
+        last: { type: GraphQLString },
+        next: { type: GraphQLString }
+    })
+})
 
 // BasicInformation Type
 const BasicInformationWantlistType = new GraphQLObjectType({
@@ -169,16 +192,23 @@ const RootQuery = new GraphQLObjectType({
         },
         collection: {
             type: CollectionType,
+            args: {
+                per_page: { type: GraphQLInt }
+            },
             resolve(parent, args) {
-                return axios.get(`https://api.discogs.com/users/eckosneekz/collection/folders/0/releases?sort=added&sort_order=desc&per_page=25&token=${ process.env.DISCOGS_API_TOKEN }`)
+                return axios.get(`https://api.discogs.com/users/eckosneekz/collection/folders/0/releases?sort=added&sort_order=desc&per_page=${ args.per_page }&token=${ process.env.DISCOGS_API_TOKEN }`)
                     .then(res => res.data)
             }
         },
         wantlist: {
             type: WantlistType,
+            args: {
+                per_page: { type: GraphQLInt }
+            },
             resolve(parent, args) {
-                return axios.get(`https://api.discogs.com/users/eckosneekz/wants?sort=added&sort_order=desc&per_page=25&token=${ process.env.DISCOGS_API_TOKEN }`)
+                return axios.get(`https://api.discogs.com/users/eckosneekz/wants?sort=added&sort_order=desc&per_page=${ args.per_page }&token=${ process.env.DISCOGS_API_TOKEN }`)
                     .then(res => res.data)
+                    // Need to make a subsequest API request to https://api.discogs.com/releases/${ args.id } 
             }
         },
         releases: {
