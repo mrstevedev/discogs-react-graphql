@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import classnames from 'classnames';
 import Moment from 'react-moment';
+import SideBar from './SearchBar';
 
 export const COLLECTION_QUERY = gql`
-    query CollectionQuery($per_page: Int!) {
-        collection(per_page: $per_page) {
+    query CollectionQuery($page: Int!, $per_page: Int!) {
+        collection(page: $page, per_page: $per_page) {
             pagination {
                 per_page
                 items
@@ -35,27 +36,16 @@ export const COLLECTION_QUERY = gql`
 
 function Collection()  {
     const { loading, error, data:collectionData, refetch, variables } = useQuery(COLLECTION_QUERY, {
-        variables: { per_page: 50 }
+        variables: { page: 1, per_page: 25 }
     });
     if(loading) return <h4>Loading..</h4>;
     if(error) console.log(error);
     console.log(collectionData);
-    const {
-        date_added,
-        basic_information,
-        artists
-    } = collectionData.collection.releases
-    
+    console.log(variables);
+    const lessOnePage = collectionData.collection.pagination.pages-1;
     return (
-        <div className="discogs__collection--container">
-            <div>
-            <form className="discogs__wantlist--search-form">
-            <input className="discogs__wantlist--searchInput" type="text" placeholder="Search Collection"
-            />
-            <svg fill="#ccc" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z" />
-            </svg>
-            </form>
+        <Fragment>
+           <SideBar data={collectionData} placeholder="Search Collection" />
             <div className="discogs__wantlist--toggle-options">
                 <div className="discogs__wantlist--toggle-select">
                     <select value={ collectionData.collection.pagination.per_page } onChange={(event) => refetch( { per_page: parseInt(event.target.value) } )}>
@@ -69,7 +59,12 @@ function Collection()  {
 
                 </div>
             </div>
+            <div className="discogs__wantlist-pagination">
+                { collectionData.collection.pagination.page } - { collectionData.collection.pagination.per_page } of { collectionData.collection.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
+                <a href="#" onClick={ () => refetch( { page: collectionData.collection.pagination.page -1 } )}>Prev</a> 1, 2, 3 ... { lessOnePage }  { collectionData.collection.pagination.pages }
+                <a href="#" onClick={ () => refetch( { page: collectionData.collection.pagination.page + 1 } ) }>Next</a>
             </div>
+        <div className="discogs__collection--container">            
             { collectionData.collection.releases.map( release => (
                 <div className="discogs__collection--img" key={ release.basic_information.id }>
                     <div className="discogs__collection--overlay">
@@ -82,6 +77,7 @@ function Collection()  {
                 </div>
             )) }
         </div>
+    </Fragment>
     )
 }
 
