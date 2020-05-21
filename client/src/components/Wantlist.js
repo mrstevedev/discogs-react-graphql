@@ -94,7 +94,7 @@ function Wantlist() {
 
             </div>
         </div>
-        <div className="discogs__wantlist-pagination">
+        <div className="discogs__wantlist--pagination">
             { wantlistData.wantlist.pagination.page } – { wantlistData.wantlist.pagination.per_page } of { wantlistData.wantlist.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") } 
             <a href="#" onClick={ () => refetch( { page: wantlistData.wantlist.pagination.page - 1 } ) }>Prev</a> { wantlistData.wantlist.pagination.page === 1 ? '1' : '<a href="">1</a>' }  <a href={ wantlistData.wantlist.pagination.urls.next }>2</a> <a href={ wantlistData.wantlist.pagination.urls.next }>3</a> ... { lessOneItem } { wantlistData.wantlist.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
             <a href="#" onClick={ () => refetch( { page: wantlistData.wantlist.pagination.page + 1 }) }>Next</a>
