@@ -18,7 +18,8 @@ const ProfileType = new GraphQLObjectType({
         // Fields for Profile Response Object
         username: { type: GraphQLString },
         num_collection: { type: GraphQLInt },
-        num_wantlist: { type: GraphQLInt }
+        num_wantlist: { type: GraphQLInt },
+        avatar_url: { type: GraphQLString }
     }),
 });
 
