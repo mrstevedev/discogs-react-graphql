@@ -1,8 +1,8 @@
 import React, { Component, Fragment, useState } from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-
-
+import ProfileAvatar from './ProfileAvatar';
+import Wantlist from './Wantlist';
 // Set-up query 
 const PROFILE_QUERY = gql`
     query ProfileQuery {
@@ -10,6 +10,7 @@ const PROFILE_QUERY = gql`
             username
             num_collection
             num_wantlist
+            avatar_url
         }
     }
 `;
@@ -41,9 +42,7 @@ function Profile() {
                     data-aos-delay="100"
                     data-aos-duration="10"
                     data-aos-easing="ease-in-out">
-                    <a href="#" onClick={handleModalOpen}>
-                        <div className="discogs__profile--img"></div>
-                    </a>
+                    <ProfileAvatar data={data} handleModalOpen={handleModalOpen} />
                     <div className="discogs__profile--username">
                     <h1>{username}</h1>
                     </div>
