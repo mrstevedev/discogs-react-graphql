@@ -73,7 +73,6 @@ footer {
 }
 
 .discogs__profile--img {
-    background-image: url('../public/img/joehenderson.jpg');
     background-repeat: no-repeat;
     width: 180px;
     height: 180px;
@@ -326,7 +325,7 @@ footer {
 }
 
 .discogs__wantlist--toggle-options,
-.discogs__wantlist-pagination {
+.discogs__wantlist--pagination {
     padding: 20px;
     font-family: Helvetica Neue;
 }
