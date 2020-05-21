@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import classnames from 'classnames';
@@ -34,10 +34,8 @@ export const COLLECTION_QUERY = gql`
 `;
 
 function Collection()  {
-    const [ perPage, setPerPage ] = useState(50);
-
     const { loading, error, data:collectionData, refetch, variables } = useQuery(COLLECTION_QUERY, {
-        variables: { per_page: perPage }
+        variables: { per_page: 50 }
     });
     if(loading) return <h4>Loading..</h4>;
     if(error) console.log(error);
