@@ -59,7 +59,7 @@ function Profile() {
                 </div>
                 <div className={`overlay ${modalActive ? 'show': ''}`}>
                     <div className="modal-close">
-                        <a href="#" onClick={handleModalClose}>Close</a>
+                        <a href="#" onClick={handleModalClose}><i className="fas fa-times"></i></a>
                     </div>
                     <div className="modal">
                         <img src="../../public/img/joehenderson.jpg" />
