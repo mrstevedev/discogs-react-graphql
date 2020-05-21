@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import SearchBar from './SearchBar';
 
 const WANTLIST_QUERY = gql`
-  query WantlistQuery($per_page: Int!) {
-    wantlist(per_page: $per_page) {
+  query WantlistQuery($page: Int!, $per_page: Int!) {
+    wantlist(page: $page, per_page: $per_page) {
       wants {
         rating
         notes
@@ -60,7 +61,7 @@ const RELEASES_QUERY = gql`
 
 function Wantlist() {
     const { loading, error, data: wantlistData, refetch, variables } = useQuery(WANTLIST_QUERY, {
-      variables: { per_page: 50 }
+      variables: { page: 1, per_page: 25 }
     });
     // const id = wantlistData && wantlistData.wantlist.wants.map((want) => want.basic_information.id);
     // console.log(id);
@@ -73,25 +74,13 @@ function Wantlist() {
     if (loading) return <h4>Loading..</h4>;
     if (error) console.log(error);
     console.log(wantlistData);
+
+    const lessOne = wantlistData.wantlist.pagination.items-1;
+    const lessOneItem = lessOne.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
   return (
-    <div>
-      <div className="discogs__wantlist--search">
-        <form className="discogs__wantlist--search-form">
-          <input
-            className="discogs__wantlist--searchInput"
-            type="text"
-            placeholder="Search Wantlist"
-          />
-          <svg
-            fill="#ccc"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <path d="M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z" />
-          </svg>
-        </form>
+    <Fragment>
+      <SearchBar data={wantlistData} placeholder="Search Wantlist" />
         <div className="discogs__wantlist--toggle-options">
             <div className="discogs__wantlist--toggle-select">
                 <select value={ wantlistData.wantlist.pagination.per_page } onChange={(event) => refetch( { per_page: parseInt(event.target.value) } ) }>
@@ -107,17 +96,9 @@ function Wantlist() {
         </div>
         <div className="discogs__wantlist-pagination">
             { wantlistData.wantlist.pagination.page } – { wantlistData.wantlist.pagination.per_page } of { wantlistData.wantlist.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") } 
-            <a href={ wantlistData.wantlist.pagination.urls.prev ? wantlistData.wantlist.pagination.urls.prev : '' }>Prev</a> 1, 2, 3 ... 1,529 1,530 
-            <button onClick={() => fetchMore({
-              variables: {
-                offset: wantlistData.wantlist.pagination.urls.next
-              },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                console.log(fetchMoreResult)
-              }
-            })}>Next</button>
+            <a href="#" onClick={ () => refetch( { page: wantlistData.wantlist.pagination.page - 1 } ) }>Prev</a> { wantlistData.wantlist.pagination.page === 1 ? '1' : '<a href="">1</a>' }  <a href={ wantlistData.wantlist.pagination.urls.next }>2</a> <a href={ wantlistData.wantlist.pagination.urls.next }>3</a> ... { lessOneItem } { wantlistData.wantlist.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
+            <a href="#" onClick={ () => refetch( { page: wantlistData.wantlist.pagination.page + 1 }) }>Next</a>
         </div>
-      </div>
       <div className="discogs__wantlist--container">
         {wantlistData.wantlist.wants.map((want) => (
           <div
@@ -133,7 +114,7 @@ function Wantlist() {
           </div>
         ))}
       </div>
-    </div>
+    </Fragment>
   );
 }
 
