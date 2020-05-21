@@ -193,20 +193,22 @@ const RootQuery = new GraphQLObjectType({
         collection: {
             type: CollectionType,
             args: {
+                page: { type: GraphQLInt },
                 per_page: { type: GraphQLInt }
             },
             resolve(parent, args) {
-                return axios.get(`https://api.discogs.com/users/eckosneekz/collection/folders/0/releases?sort=added&sort_order=desc&per_page=${ args.per_page }&token=${ process.env.DISCOGS_API_TOKEN }`)
+                return axios.get(`https://api.discogs.com/users/eckosneekz/collection/folders/0/releases?sort=added&sort_order=desc&per_page=${ args.per_page }&token=${ process.env.DISCOGS_API_TOKEN }&page=${ args.page }`)
                     .then(res => res.data)
             }
         },
         wantlist: {
             type: WantlistType,
             args: {
+                page: { type: GraphQLInt },
                 per_page: { type: GraphQLInt }
             },
             resolve(parent, args) {
-                return axios.get(`https://api.discogs.com/users/eckosneekz/wants?sort=added&sort_order=desc&per_page=${ args.per_page }&token=${ process.env.DISCOGS_API_TOKEN }`)
+                return axios.get(`https://api.discogs.com/users/eckosneekz/wants?sort=added&sort_order=desc&per_page=${ args.per_page }&token=${ process.env.DISCOGS_API_TOKEN }&page=${ args.page }`)
                     .then(res => res.data)
                     // Need to make a subsequest API request to https://api.discogs.com/releases/${ args.id } 
             }
