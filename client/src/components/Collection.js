@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import classnames from 'classnames';
 import Moment from 'react-moment';
 import SideBar from './SearchBar';
+import Pagination from './Pagination';
 
 export const COLLECTION_QUERY = gql`
     query CollectionQuery($page: Int!, $per_page: Int!) {
@@ -59,11 +60,7 @@ function Collection()  {
 
                 </div>
             </div>
-            <div className="discogs__wantlist--pagination">
-                { collectionData.collection.pagination.page } - { collectionData.collection.pagination.per_page } of { collectionData.collection.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
-                <a href="#" onClick={ () => refetch( { page: collectionData.collection.pagination.page -1 } )}>Prev</a> 1, 2, 3 ... { lessOnePage }  { collectionData.collection.pagination.pages }
-                <a href="#" onClick={ () => refetch( { page: collectionData.collection.pagination.page + 1 } ) }>Next</a>
-            </div>
+            <Pagination refetch={refetch} data={collectionData} />
         <div className="discogs__collection--container">            
             { collectionData.collection.releases.map( release => (
                 <div className="discogs__collection--img" key={ release.basic_information.id }>
@@ -77,6 +74,22 @@ function Collection()  {
                 </div>
             )) }
         </div>
+        <div className="discogs__wantlist--bottom">
+           <Pagination refetch={refetch} data={collectionData} />
+            <div className="discogs__wantlist--toggle-options">
+                    <div className="discogs__wantlist--toggle-select">
+                        <select value={ collectionData.collection.pagination.per_page } onChange={(event) => refetch( { per_page: parseInt(event.target.value) } )}>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="125">125</option>
+                        </select>
+                    </div>
+                    <div className="discogs__wantlist--toggle-btns">
+                        
+                    </div>
+                </div>
+            </div>
     </Fragment>
     )
 }
