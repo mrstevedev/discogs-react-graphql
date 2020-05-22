@@ -149,7 +149,7 @@ footer {
     .modal {
         background: #fff;
         width: 493px;
-        height: 465px;
+        height: 435px;
         text-align: center;
         padding: 2rem;
         position: relative;
@@ -192,6 +192,11 @@ footer {
         width: 1140px;
         margin: 0 auto;
     }
+    .overlay {
+        .modal {
+            height: 550px;
+        }
+    }
 }
 
 @media(max-width: 545px) {
@@ -231,6 +236,25 @@ footer {
     .discogs__wantlist--container {
         padding: 0 !important;
         grid-auto-rows: 500px !important;
+    }
+}
+
+@media(max-width: 375px) {
+    .main-nav-list {
+        li {
+            padding: 0 1.3rem;
+        }
+    }
+}
+
+@media(max-width: 320px) {
+    h1 {
+        font-size: 3.4rem;
+    }
+    .main-nav-list {
+        li {
+            padding: 0 0.9rem;
+        }
     }
 }
 
@@ -325,7 +349,7 @@ footer {
 }
 
 .discogs__wantlist--toggle-options,
-.discogs__wantlist--pagination {
+.discogs--pagination {
     padding: 20px;
     font-family: Helvetica Neue;
 }
