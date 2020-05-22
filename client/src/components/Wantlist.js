@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import SearchBar from './SearchBar';
+import Pagination from './Pagination';
 
 const WANTLIST_QUERY = gql`
   query WantlistQuery($page: Int!, $per_page: Int!) {
@@ -77,6 +78,8 @@ function Wantlist() {
 
     const lessOne = wantlistData.wantlist.pagination.items-1;
     const lessOneItem = lessOne.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const doubled = wantlistData.wantlist.pagination.per_page+wantlistData.wantlist.pagination.per_page;
+    console.log(doubled)
 
   return (
     <Fragment>
@@ -94,11 +97,7 @@ function Wantlist() {
 
             </div>
         </div>
-        <div className="discogs__wantlist--pagination">
-            { wantlistData.wantlist.pagination.page } – { wantlistData.wantlist.pagination.per_page } of { wantlistData.wantlist.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") } 
-            <a href="#" onClick={ () => refetch( { page: wantlistData.wantlist.pagination.page - 1 } ) }>Prev</a> { wantlistData.wantlist.pagination.page === 1 ? '1' : '<a href="">1</a>' }  <a href={ wantlistData.wantlist.pagination.urls.next }>2</a> <a href={ wantlistData.wantlist.pagination.urls.next }>3</a> ... { lessOneItem } { wantlistData.wantlist.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
-            <a href="#" onClick={ () => refetch( { page: wantlistData.wantlist.pagination.page + 1 }) }>Next</a>
-        </div>
+       <Pagination refetch={refetch} data={wantlistData} />
       <div className="discogs__wantlist--container">
         {wantlistData.wantlist.wants.map((want) => (
           <div
@@ -113,6 +112,9 @@ function Wantlist() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="discogs__wantlist--bottom">
+        <Pagination refetch={refetch} data={wantlistData} />
       </div>
     </Fragment>
   );
