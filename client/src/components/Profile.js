@@ -3,6 +3,10 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import ProfileAvatar from './ProfileAvatar';
 import Wantlist from './Wantlist';
+import Username from './Username';
+import CollectionCount from './CollectionCount';
+import WantlistCount from './WantlistCount';
+import Modal from './Modal';
 // Set-up query 
 const PROFILE_QUERY = gql`
     query ProfileQuery {
@@ -42,32 +46,19 @@ function Profile() {
                     data-aos-delay="100"
                     data-aos-duration="10"
                     data-aos-easing="ease-in-out">
-                    <ProfileAvatar data={data} handleModalOpen={handleModalOpen} />
-                    <div className="discogs__profile--username">
-                    <h1>{username}</h1>
-                    </div>
-                    <div className="discogs__profile--section">
-                        <h1 className="discogs__profile--header">Collection</h1>
-                        <span className="discogs__profile--sub">{ num_collection.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</span>
-                    </div>
-                    <div className="discogs__profile--section">
-                        <h1 className="discogs__profile--header">Wantlist</h1>
-                        <span className="discogs__profile--sub">{ num_wantlist.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</span>
-
-                    </div>
+                    <ProfileAvatar 
+                        data={data} 
+                        handleModalOpen={handleModalOpen} />
+                    <Username 
+                        username={username} />
+                    <CollectionCount 
+                        count={num_collection} />
+                    <WantlistCount 
+                        count={num_wantlist} />
                 </div>
-                <div className={`overlay ${modalActive ? 'show': ''}`}>
-                    <div className="modal-close">
-                        <a href="#" onClick={handleModalClose}><i className="fas fa-times"></i></a>
-                    </div>
-                    <div className="modal">
-                        <img src="../../public/img/joehenderson.jpg" />
-
-                        <div>
-                            <a href="#" onClick={handleModalClose}>Close</a>
-                        </div>
-                    </div>
-                </div>
+                    <Modal
+                        modalActive={modalActive} 
+                        handleModalClose={handleModalClose} />
             </Fragment>
         )
 }
