@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 
 function SearchBar(props) {
-  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <Fragment>
       <div className="discogs--search">
@@ -9,9 +9,9 @@ function SearchBar(props) {
           <input
             className="discogs--searchInput"
             type="text"
-            value={ searchTerm }
+            value={ props.searchTerm }
             placeholder={props.placeholder}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => props.handleSearch(e)}
           />
           <svg
             fill="#ccc"
