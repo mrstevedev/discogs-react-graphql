@@ -7,6 +7,8 @@ import Username from './Username';
 import CollectionCount from './CollectionCount';
 import WantlistCount from './WantlistCount';
 import Modal from './Modal';
+import { SpinnerCircular } from 'spinners-react';
+
 // Set-up query 
 const PROFILE_QUERY = gql`
     query ProfileQuery {
@@ -31,7 +33,16 @@ function Profile() {
     }
 
     const { loading, error, data } = useQuery(PROFILE_QUERY);
-    if(loading) return <h4>Loading..</h4>;
+    if(loading) return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '92vh' }}>
+        <SpinnerCircular 
+          size={50} 
+          thickness={100} 
+          speed={100}
+          color="rgba(109, 122, 216, 1)"  
+          secondaryColor="rgba(0, 0, 0, 0.44)" />
+      </div>
+    );
     
     const {
         username,
@@ -42,11 +53,9 @@ function Profile() {
         return (
             <Fragment>
                 <div className="discogs__profile--container" 
-                    data-aos="fade-in" 
-                    data-aos-delay="100"
-                    data-aos-duration="10"
-                    data-aos-easing="ease-in-out">
-                    <ProfileAvatar 
+                 
+                    >
+                    <ProfileAvatar
                         data={data} 
                         handleModalOpen={handleModalOpen} />
                     <Username 
@@ -57,6 +66,7 @@ function Profile() {
                         count={num_wantlist} />
                 </div>
                     <Modal
+                        data={data}
                         modalActive={modalActive} 
                         handleModalClose={handleModalClose} />
             </Fragment>
