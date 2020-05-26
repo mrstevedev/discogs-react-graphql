@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 
 function Pagination(props) {
-    console.log('props in Pagination', props);
     return (
         <Fragment>
             { props.data.wantlist ? (
@@ -16,7 +15,7 @@ function Pagination(props) {
                 <Fragment>
                      <div className="discogs--pagination">
                         { props.data.collection.pagination.page } - { props.data.collection.pagination.per_page } of { props.data.collection.pagination.items.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
-                        <a href="#" onClick={ () => props.refetch( { page: props.data.collection.pagination.page -1 } )}>Prev</a> 1, 2, 3 ... 79  { props.data.collection.pagination.pages }
+                        <a href="#" onClick={ () => props.refetch( { page: props.data.collection.pagination.page -1 } )}>Prev</a> 1 2 3 ... 79  { props.data.collection.pagination.pages }
                         <a href="#" onClick={ () => props.refetch( { page: props.data.collection.pagination.page + 1 } ) }>Next</a>
                     </div>
                 </Fragment>
