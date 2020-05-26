@@ -1,8 +1,11 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import SearchBar from './SearchBar';
 import Pagination from './Pagination';
+import ToggleCount from "./ToggleCount";
+import Results from "./Results";
+import { SpinnerCircular } from 'spinners-react';
 
 const WANTLIST_QUERY = gql`
   query WantlistQuery($page: Int!, $per_page: Int!) {
@@ -61,6 +64,13 @@ const RELEASES_QUERY = gql`
 // `;
 
 function Wantlist() {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredRelease, setfilteredRelease] = useState('');
+
+    useEffect(() => {
+      const newfilteredRelease = filteredRelease;
+    }, [filteredRelease])
+    
     const { loading, error, data: wantlistData, refetch, variables } = useQuery(WANTLIST_QUERY, {
       variables: { page: 1, per_page: 25 }
     });
@@ -72,47 +82,50 @@ function Wantlist() {
     //     skip: wantlistData == null
     // })
     // const { id = data.wantlist.wants.map( x => ( { id: x.basic_information.id } )) } = data;
-    if (loading) return <h4>Loading..</h4>;
+    if (loading) return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '92vh' }}>
+        <SpinnerCircular 
+          size={50} 
+          thickness={100} 
+          speed={100}
+          color="rgba(109, 122, 216, 1)"  
+          secondaryColor="rgba(0, 0, 0, 0.44)" />
+      </div>
+    );
     if (error) console.log(error);
     console.log(wantlistData);
 
-    const lessOne = wantlistData.wantlist.pagination.items-1;
-    const lessOneItem = lessOne.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    const doubled = wantlistData.wantlist.pagination.per_page+wantlistData.wantlist.pagination.per_page;
-    console.log(doubled)
+    // const lessOne = wantlistData.wantlist.pagination.items-1;
+    // const lessOneItem = lessOne.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // const doubled = wantlistData.wantlist.pagination.per_page+wantlistData.wantlist.pagination.per_page;
+    // console.log(doubled)
+
+    function handleSearch(e) {
+      setSearchTerm(e.target.value);
+
+      setfilteredRelease(wantlistData.wantlist.wants.filter((search) => {
+        return search.basic_information.title === e.target.value
+      }));    
+
+    }
 
   return (
     <Fragment>
-      <SearchBar data={wantlistData} placeholder="Search Wantlist" />
-        <div className="discogs__wantlist--toggle-options">
-            <div className="discogs__wantlist--toggle-select">
-                <select value={ wantlistData.wantlist.pagination.per_page } onChange={(event) => refetch( { per_page: parseInt(event.target.value) } ) }>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="125">125</option>
-                </select>
-            </div>
-            <div className="discogs__wantlist--toggle-btns">
-
-            </div>
-        </div>
-       <Pagination refetch={refetch} data={wantlistData} />
-      <div className="discogs__wantlist--container">
-        {wantlistData.wantlist.wants.map((want) => (
-          <div
-            className="discogs__wantlist--img"
-            key={want.basic_information.id}
-          >
-            <img src={`${want.basic_information.cover_image}`} />
-            <div className="discogs__wantlist--title">{want.basic_information.title}</div>
-            <div className="discogs__wantlist--artist">{want.basic_information.artists[0].name}</div>
-            <div className="">
-              <a href="#">3 for sale</a> from $8
-            </div>
-          </div>
-        ))}
-      </div>
+        <SearchBar
+           handleSearch={handleSearch}
+           searchTerm={searchTerm}
+           setSearchTerm={setSearchTerm}
+           data={wantlistData}
+           placeholder="Search Wantlist" />
+        <ToggleCount 
+          data={wantlistData} 
+          refetch={refetch} />
+        <Pagination 
+          refetch={refetch} 
+          data={wantlistData} />
+        <Results
+          filteredRelease={filteredRelease}
+          data={wantlistData} />
       <div className="discogs__wantlist--bottom">
         <Pagination refetch={refetch} data={wantlistData} />
       </div>
