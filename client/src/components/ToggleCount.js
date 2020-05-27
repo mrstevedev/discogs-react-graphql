@@ -15,7 +15,7 @@ function ToggleCount(props) {
                     </div>
                 <div className="discogs__wantlist--toggle-btns"></div>
             </div>
-            ) : (
+            ) : props.data.wantlist ? (
                 <div className="discogs__wantlist--toggle-options">
                     <div className="discogs__wantlist--toggle-select">
                         <select value={ props.data.wantlist.pagination.per_page } onChange={(event) => props.refetch( { per_page: parseInt(event.target.value) } ) }>
@@ -29,7 +29,7 @@ function ToggleCount(props) {
 
                     </div>
                 </div>
-            ) }
+            ) : '' }
         </Fragment>
     )
 }
