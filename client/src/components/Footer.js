@@ -3,8 +3,9 @@ import InfoIcon from "./InfoIcon";
 
 function Footer() {
     const [infoActive, setInfoActive] = useState(false);
-    function handleInfoClick() {
-        console.log('info clicked');
+    function handleInfoClick(e) {
+        e.preventDefault();
+        
         setInfoActive(true);
 
         if(infoActive === true) {
