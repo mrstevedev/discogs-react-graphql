@@ -2,7 +2,7 @@ import React, { Component, Fragment, useState } from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import ProfileAvatar from './ProfileAvatar';
-import Wantlist from './Wantlist';
+import ProfileLogo from './Logo';
 import Username from './Username';
 import CollectionCount from './CollectionCount';
 import WantlistCount from './WantlistCount';
@@ -55,6 +55,7 @@ function Profile() {
                 <div className="discogs__profile--container" 
                  
                     >
+                    <ProfileLogo />
                     <ProfileAvatar
                         data={data} 
                         handleModalOpen={handleModalOpen} />
