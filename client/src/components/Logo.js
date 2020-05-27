@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import Logo from '../../public/img/discogs-logo.svg';
+import ProfileLogo from '../../public/img/discogs-logo.svg';
 
 function Logo() {
     return (
-        <Fragment>
-            <img src={ Logo } />
-        </Fragment>
+        <div className="discogs--logo">
+            <img src={ ProfileLogo } />
+        </div>
     )
 }
 export default Logo;
