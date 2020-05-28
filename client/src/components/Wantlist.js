@@ -120,14 +120,14 @@ function Wantlist() {
         <ToggleCount 
           data={wantlistData} 
           refetch={refetch} />
-        <Pagination 
+        {/* <Pagination 
           refetch={refetch} 
-          data={wantlistData} />
+          data={wantlistData} /> */}
         <Results
           filteredRelease={filteredRelease}
           data={wantlistData} />
       <div className="discogs__wantlist--bottom">
-        <Pagination refetch={refetch} data={wantlistData} />
+        {/* <Pagination refetch={refetch} data={wantlistData} /> */}
       </div>
     </Fragment>
   );
