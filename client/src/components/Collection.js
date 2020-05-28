@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import classnames from 'classnames';
 import SearchBar from './SearchBar';
 import Pagination from './Pagination';
 import ToggleCount from './ToggleCount';
