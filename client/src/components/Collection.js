@@ -89,27 +89,17 @@ function handleSearch(e) {
             <ToggleCount 
                 refetch={refetch} 
                 data={collectionData} />
-            <Pagination 
+            {/* <Pagination 
                 refetch={refetch} 
-                data={collectionData} />
+                data={collectionData} /> */}
             <Results
                 filteredRelease={filteredRelease}
                 data={collectionData} />
         <div className="discogs__wantlist--bottom">
-           <Pagination refetch={refetch} data={collectionData} />
-            <div className="discogs__wantlist--toggle-options">
-                    <div className="discogs__wantlist--toggle-select">
-                        <select value={ collectionData.collection.pagination.per_page } onChange={(event) => refetch( { per_page: parseInt(event.target.value) } )}>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="125">125</option>
-                        </select>
-                    </div>
-                    <div className="discogs__wantlist--toggle-btns">
-                        
-                    </div>
-                </div>
+           {/* <Pagination refetch={refetch} data={collectionData} /> */}
+           <ToggleCount 
+                refetch={refetch} 
+                data={collectionData} />
             </div>
     </Fragment>
     )
