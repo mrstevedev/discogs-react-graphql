@@ -200,6 +200,13 @@ footer {
 }
 
 @media(max-width: 545px) {
+    .discogs--logo {
+        width: 30%;
+        margin: 1rem 2rem;
+        img {
+            width: 190px;
+        }
+    }
     nav {
         background: #ffffff;
     }
@@ -244,6 +251,11 @@ footer {
     .discogs__wantlist--container {
         padding: 0 !important;
         grid-auto-rows: 500px !important;
+    }
+
+    .discogs--searchInput {
+        border-bottom: none !important;
+        background: #000 !important;
     }
 }
 
@@ -334,18 +346,29 @@ footer {
 }
 
 // Wantlist Styles 
+.discogs--search {
+    width: 496px;
+    position: relative;
+    svg {
+        position: absolute;
+        top: 3rem;
+        right: 2.7rem;
+    }
+}
 .discogs--searchInput {
-    height: 38px;
+    height: 20px;
     border: none;
     outline: none;
     background: transparent;
     color: #fff;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.1rem;
     text-indent: 0.2rem;
     border-bottom: solid 1px #b9b9b9;
     margin: 2rem 1rem;
-    // width: 400px;
+    padding: 1rem 0 1rem 1rem;
+    text-transform: uppercase;
+    width: 90%;
 }
 
 .discogs__wantlist--title {
@@ -353,7 +376,11 @@ footer {
 }
 
 ::placeholder {
-    font-size: 1rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: #fff;
+    font-family: 'HelveticaNeueBlackCond';
+    letter-spacing: 0.01rem;
 }
 
 .discogs__wantlist--toggle-options,
