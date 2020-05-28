@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactImg from '../../public/img/React.png';
-import NodejsImg from '../../public/img/Nodejs.png';
-// import GraphQLImg from '../../public/img/GraphQLImg.svg';
+import ReactjsLogo from '../../public/img/React-icon.svg';
+import NodejsLogo from '../../public/img/Nodejs-logo.svg';
+import GraphQLimg from '../../public/img/GraphQL-logo.svg';
 
 function About() {
     return (
@@ -9,9 +9,10 @@ function About() {
             <p className="discogs__about--text">
                 Full stack application with Reactjs, with useEffect, useState hooks, CSS3, BEM, ES6 Javascript, Nodejs, Express, Webpack, Babel, & GraphQL using the Discogs API.
             </p>
-            <p>
-                <img src={ ReactImg } />
-                <img src={ NodejsImg } />
+            <p style={{ display: 'flex' }}>
+                <img src={ ReactjsLogo } style={{ margin: '0 0.5rem' }} />
+                <img src={ NodejsLogo } style={{ margin: '0 0.5rem' }} />
+                <img src={ GraphQLimg } style={{ margin: '0 0.5rem' }} />
             </p>
         </div>
     )
