@@ -2,8 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
-const dotenv = require('dotenv');
-
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry: ['@babel/polyfill', './src/index.js'],
@@ -49,6 +48,8 @@ module.exports = {
             }
         ]
     },
+    devtool: false,
+
     plugins: [
         // uses the index.html file as the template file
         new HtmlWebpackPlugin({
@@ -59,6 +60,11 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {from: './public/'}
-        ])
+        ]),
+        // new BundleAnalyzerPlugin(),
+        new webpack.ContextReplacementPlugin(
+            /moment[/\\]locale$/,
+            /en/
+          )
     ]
 }
