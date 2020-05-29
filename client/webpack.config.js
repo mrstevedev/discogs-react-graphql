@@ -7,7 +7,7 @@ const webpack = require('webpack');
 module.exports = {
     entry: ['@babel/polyfill', './src/index.js'],
     output: {
-        path: path.join(__dirname, '/dist'),
+        path: path.join(__dirname, '/public'),
         publicPath: '/',
         filename: 'index_bundle.js'
     },
@@ -59,7 +59,7 @@ module.exports = {
             }
         }),
         new CopyWebpackPlugin([
-            {from: './public/'}
+            {from: '../public/'}
         ]),
         // new BundleAnalyzerPlugin(),
         new webpack.ContextReplacementPlugin(
