@@ -9,10 +9,6 @@ const app = express();
 // Alloe Cross-Origin
 app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send('Welcome to the API');
-});
-
 app.use('/graphql', graphQLHTTP({
     schema: MyGraphQLSchema,
     graphiql: true
